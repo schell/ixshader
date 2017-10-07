@@ -14,11 +14,35 @@ the pipeline, typechecking only what you want.
 The resulting source is pretty and human readable, even debuggable without
 sourcemapping.
 
+You should create a separate file for your shaders as `ixshader` relies on
+the `RebindableSyntax` language extension and re-defines key functions such as
+`>>=`, `>>`, `return`, `fail`, `void`, `fromInteger` and `fromRational`.
+
 ## example
 
 ```haskell
+{-# LANGUAGE AllowAmbiguousTypes   #-}
+{-# LANGUAGE DataKinds             #-}
+{-# LANGUAGE FlexibleContexts      #-}
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE GADTs                 #-}
+{-# LANGUAGE LambdaCase            #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE PolyKinds             #-}
+{-# LANGUAGE RankNTypes            #-}
+{-# LANGUAGE RebindableSyntax      #-}
+{-# LANGUAGE ScopedTypeVariables   #-}
+{-# LANGUAGE TypeFamilies          #-}
+{-# LANGUAGE TypeInType            #-}
+{-# LANGUAGE TypeOperators         #-}
+{-# LANGUAGE UndecidableInstances  #-}
+
+module MyShaders where
+
+import Graphics.IxShader
+
 myvertex
-  :: forall ctx. HasContext ctx
+  :: forall (ctx :: GLContext). HasContext ctx
   => IxShader ctx '[] '[ In      Xvec2 "position"
                        , In      Xvec4 "color"
                        , Uniform Xmat4 "projection"

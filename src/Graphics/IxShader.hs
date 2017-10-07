@@ -222,13 +222,16 @@ for (name, v) fi f = do
   sub "{" "}" $ f k
 
 bigfattestvertex
-  :: forall (ctx :: GLContext).
-  IxShader ctx '[] '[ Uniform Xvec2 "u_resolution"
-                    , Out Xvec4 "gl_Position"
-                    , Function Xint "myFunc" (Xint, Xint)
-                    , Main
-                    ] ()
+  :: forall (ctx :: GLContext). HasContext ctx
+  => IxShader ctx '[] '[ Uniform Xvec2 "u_resolution"
+                       , Out Xvec4 "gl_Position"
+                       , Function Xint "myFunc" (Xint, Xint)
+                       , Main
+                       ] ()
 bigfattestvertex = do
+  case getCtx @ctx of
+    OpenGLContext -> nxt_ "#version 330 core\n"
+    WebGLContext  -> nxt_ "precision highp float;\n"
   res <- uniform_
   pos <- gl_Position
 
