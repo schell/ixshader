@@ -1,5 +1,5 @@
 name:                ixshader
-version:             0.1.0.0
+version:             0.0.1.0
 synopsis:            A shallow embedding of the OpenGL Shading Language in Haskell.
 description:         ixshader is a shallow embedding of the OpenGL Shading
                      Language in Haskell. It aims to look as close to actual
