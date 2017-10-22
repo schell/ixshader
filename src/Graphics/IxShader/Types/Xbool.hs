@@ -34,18 +34,18 @@ $(genKnownTypeSymbol [t|Xbool|] [e|"bool"|])
 $(genSocketed        [t|Xbool|] [e|unXbool|] [e|Xbool|])
 $(genToParams        [t|Xbool|])
 
-ifThenElse :: Xbool -> IxShader ctx i i () -> IxShader ctx i i () -> IxShader ctx i i ()
+ifThenElse :: Xbool -> IxShader shadertype ctx i i () -> IxShader shadertype ctx i i () -> IxShader shadertype ctx i i ()
 ifThenElse x a b = do
   nxt_ $ "if (" ++ unSocket x ++ ")"
   sub_ "{" "}" a
   sub_ "else {" "}" b
 
-when :: Xbool -> IxShader ctx i i () -> IxShader ctx i i ()
+when :: Xbool -> IxShader shadertype ctx i i () -> IxShader shadertype ctx i i ()
 when x a = do
   nxt_ $ "if (" ++ unSocket x ++ ")"
   sub_ "{" "}" a
 
-unless :: Xbool -> IxShader ctx i i () -> IxShader ctx i i ()
+unless :: Xbool -> IxShader shadertype ctx i i () -> IxShader shadertype ctx i i ()
 unless x a = do
   nxt_ $ "if (! " ++ unSocket x ++ ")"
   sub_ "{" "}" a

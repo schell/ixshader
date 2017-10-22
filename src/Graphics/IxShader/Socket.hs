@@ -92,7 +92,7 @@ toDefinition a = unwords [typeSymbolVal $ Proxy @a, unSocket a]
 define
   :: (Socketed a, KnownTypeSymbol a)
   => a
-  -> IxShader ctx i i a
+  -> IxShader shadertype ctx i i a
 define a = nxt (toDefinition a ++ ";") a
 
 stringDefinition :: (Socketed k, KnownTypeSymbol k) => k -> k -> String
@@ -103,7 +103,7 @@ defineAs
   :: (Socketed a, KnownTypeSymbol a)
   => String
   -> a
-  -> IxShader ctx i i a
+  -> IxShader shadertype ctx i i a
 defineAs s v =
   let k = socket s in nxt (stringDefinition k v) k
 
@@ -111,5 +111,5 @@ def
   :: (Socketed a, KnownTypeSymbol a)
   => String
   -> a
-  -> IxShader ctx i i a
+  -> IxShader shadertype ctx i i a
 def = defineAs

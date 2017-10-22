@@ -36,18 +36,18 @@ import           Graphics.IxShader.Types             (Xvoid)
 --------------------------------------------------------------------------------
 -- Defining and calling functions
 -------------------------------------------------------------------------------
-funcReturnType :: forall t ctx i. (KnownTypeSymbol t) => IxShader ctx i i ()
+funcReturnType :: forall t ctx shadertype i. (KnownTypeSymbol t) => IxShader shadertype ctx i i ()
 funcReturnType = nxt_ $ typeSymbolVal $ Proxy @t
 
-funcName :: forall name ctx i. (KnownSymbol name) => IxShader ctx i i ()
+funcName :: forall name ctx shadertype i. (KnownSymbol name) => IxShader shadertype ctx i i ()
 funcName = nxt_ $ symbolVal $ Proxy @name
 
-funcParams :: ToParams ps => ps -> IxShader ctx i i ()
+funcParams :: ToParams ps => ps -> IxShader shadertype ctx i i ()
 funcParams ps = nxt_ $ "(" ++ intercalate ", " (toParams ps) ++ ")"
 
 returnValue
   :: (Socketed a, KnownTypeSymbol a)
-  => a -> IxShader ctx i i a
+  => a -> IxShader shadertype ctx i i a
 returnValue a = nxt (unwords ["return", unSocket a, ";"]) a
 
 funcCall
@@ -62,15 +62,15 @@ funcCall ps = socket $ unwords [ symbolVal $ Proxy @name
 
 data Function rtype fname ps = Function
 
-type IxFunction ctx i rtype fname ps =
-  IxShader ctx i (i :++ '[Function rtype fname ps]) (ps -> rtype)
+type IxFunction shadertype ctx i rtype fname ps =
+  IxShader shadertype ctx i (i :++ '[Function rtype fname ps]) (ps -> rtype)
 
 func
-  :: forall fname rtype ps ctx i.
+  :: forall fname rtype ps ctx shadertype i.
      (ToParams ps, KnownTypeSymbol rtype, Socketed rtype, KnownSymbol fname)
   => ps
-  -> (ps -> IxShader ctx i i rtype)
-  -> IxShader ctx i (i :++ '[Function rtype fname ps]) (ps -> rtype)
+  -> (ps -> IxShader shadertype ctx i i rtype)
+  -> IxShader shadertype ctx i (i :++ '[Function rtype fname ps]) (ps -> rtype)
 func ps f = do
   nxt_ ""
   funcReturnType @rtype
@@ -81,7 +81,7 @@ func ps f = do
   nxt_ ""
   return $ funcCall @fname
 
-use :: Socketed a => a -> IxShader ctx i i ()
+use :: Socketed a => a -> IxShader shadertype ctx i i ()
 use a = nxt_ (unSocket a ++ ";")
 
 type Main = Function Xvoid "main" ()

@@ -211,3 +211,192 @@ $(genKnownTypeSymbol [t|Xmat4|] [e|"mat4"|])
 $(genSocketed        [t|Xmat4|] [e|unXmat4|] [e|Xmat4|])
 $(genToParams        [t|Xmat4|])
 type Xmat4x4 = Xmat4
+
+----------------------------------------------------------------------
+-- Sampler Types (Opaque)
+----------------------------------------------------------------------
+newtype Xsampler1D = Xsampler1D { unXsampler1D :: String }
+$(genKnownTypeSymbol [t|Xsampler1D|] [e|"sampler1D"|])
+$(genSocketed        [t|Xsampler1D|] [e|unXsampler1D|] [e|Xsampler1D|])
+$(genToParams        [t|Xsampler1D|])
+
+newtype Xsampler2D = Xsampler2D { unXsampler2D :: String }
+$(genKnownTypeSymbol [t|Xsampler2D|] [e|"sampler2D"|])
+$(genSocketed        [t|Xsampler2D|] [e|unXsampler2D|] [e|Xsampler2D|])
+$(genToParams        [t|Xsampler2D|])
+
+newtype Xsampler3D = Xsampler3D { unXsampler3D :: String }
+$(genKnownTypeSymbol [t|Xsampler3D|] [e|"sampler3D"|])
+$(genSocketed        [t|Xsampler3D|] [e|unXsampler3D|] [e|Xsampler3D|])
+$(genToParams        [t|Xsampler3D|])
+
+newtype XsamplerCube = XsamplerCube { unXsamplerCube :: String }
+$(genKnownTypeSymbol [t|XsamplerCube|] [e|"samplerCube"|])
+$(genSocketed        [t|XsamplerCube|] [e|unXsamplerCube|] [e|XsamplerCube|])
+$(genToParams        [t|XsamplerCube|])
+
+newtype XsamplerCubeShadow = XsamplerCubeShadow { unXsamplerCubeShadow :: String }
+$(genKnownTypeSymbol [t|XsamplerCubeShadow|] [e|"samplerCubeShadow"|])
+$(genSocketed        [t|XsamplerCubeShadow|] [e|unXsamplerCubeShadow|] [e|XsamplerCubeShadow|])
+$(genToParams        [t|XsamplerCubeShadow|])
+
+newtype Xsampler2DRect = Xsampler2DRect { unXsampler2DRect :: String }
+$(genKnownTypeSymbol [t|Xsampler2DRect|] [e|"sampler2DRect"|])
+$(genSocketed        [t|Xsampler2DRect|] [e|unXsampler2DRect|] [e|Xsampler2DRect|])
+$(genToParams        [t|Xsampler2DRect|])
+
+newtype Xsampler1DShadow = Xsampler1DShadow { unXsampler1DShadow :: String }
+$(genKnownTypeSymbol [t|Xsampler1DShadow|] [e|"sampler1DShadow"|])
+$(genSocketed        [t|Xsampler1DShadow|] [e|unXsampler1DShadow|] [e|Xsampler1DShadow|])
+$(genToParams        [t|Xsampler1DShadow|])
+
+newtype Xsampler2DShadow = Xsampler2DShadow { unXsampler2DShadow :: String }
+$(genKnownTypeSymbol [t|Xsampler2DShadow|] [e|"sampler2DShadow"|])
+$(genSocketed        [t|Xsampler2DShadow|] [e|unXsampler2DShadow|] [e|Xsampler2DShadow|])
+$(genToParams        [t|Xsampler2DShadow|])
+
+newtype Xsampler2DRectShadow = Xsampler2DRectShadow { unXsampler2DRectShadow :: String }
+$(genKnownTypeSymbol [t|Xsampler2DRectShadow|] [e|"sampler2DRectShadow"|])
+$(genSocketed        [t|Xsampler2DRectShadow|] [e|unXsampler2DRectShadow|] [e|Xsampler2DRectShadow|])
+$(genToParams        [t|Xsampler2DRectShadow|])
+
+newtype Xsampler1DArray = Xsampler1DArray { unXsampler1DArray :: String }
+$(genKnownTypeSymbol [t|Xsampler1DArray|] [e|"sampler1DArray"|])
+$(genSocketed        [t|Xsampler1DArray|] [e|unXsampler1DArray|] [e|Xsampler1DArray|])
+$(genToParams        [t|Xsampler1DArray|])
+
+newtype Xsampler2DArray = Xsampler2DArray { unXsampler2DArray :: String }
+$(genKnownTypeSymbol [t|Xsampler2DArray|] [e|"sampler2DArray"|])
+$(genSocketed        [t|Xsampler2DArray|] [e|unXsampler2DArray|] [e|Xsampler2DArray|])
+$(genToParams        [t|Xsampler2DArray|])
+
+newtype Xsampler1DArrayShadow = Xsampler1DArrayShadow { unXsampler1DArrayShadow :: String }
+$(genKnownTypeSymbol [t|Xsampler1DArrayShadow|] [e|"sampler1DArrayShadow"|])
+$(genSocketed        [t|Xsampler1DArrayShadow|] [e|unXsampler1DArrayShadow|] [e|Xsampler1DArrayShadow|])
+$(genToParams        [t|Xsampler1DArrayShadow|])
+
+newtype Xsampler2DArrayShadow = Xsampler2DArrayShadow { unXsampler2DArrayShadow :: String }
+$(genKnownTypeSymbol [t|Xsampler2DArrayShadow|] [e|"sampler2DArrayShadow"|])
+$(genSocketed        [t|Xsampler2DArrayShadow|] [e|unXsampler2DArrayShadow|] [e|Xsampler2DArrayShadow|])
+$(genToParams        [t|Xsampler2DArrayShadow|])
+
+newtype XsamplerBuffer = XsamplerBuffer { unXsamplerBuffer :: String }
+$(genKnownTypeSymbol [t|XsamplerBuffer|] [e|"samplerBuffer"|])
+$(genSocketed        [t|XsamplerBuffer|] [e|unXsamplerBuffer|] [e|XsamplerBuffer|])
+$(genToParams        [t|XsamplerBuffer|])
+
+newtype Xsampler2DMS = Xsampler2DMS { unXsampler2DMS :: String }
+$(genKnownTypeSymbol [t|Xsampler2DMS|] [e|"sampler2DMS"|])
+$(genSocketed        [t|Xsampler2DMS|] [e|unXsampler2DMS|] [e|Xsampler2DMS|])
+$(genToParams        [t|Xsampler2DMS|])
+
+newtype Xsampler2DMSArray = Xsampler2DMSArray { unXsampler2DMSArray :: String }
+$(genKnownTypeSymbol [t|Xsampler2DMSArray|] [e|"sampler2DMSArray"|])
+$(genSocketed        [t|Xsampler2DMSArray|] [e|unXsampler2DMSArray|] [e|Xsampler2DMSArray|])
+$(genToParams        [t|Xsampler2DMSArray|])
+
+--------------------------------------------------------------------------------
+-- Unsigned sampler types
+--------------------------------------------------------------------------------
+newtype Xusampler1D = Xusampler1D { unXusampler1D :: String }
+$(genKnownTypeSymbol [t|Xusampler1D|] [e|"usampler1D"|])
+$(genSocketed        [t|Xusampler1D|] [e|unXusampler1D|] [e|Xusampler1D|])
+$(genToParams        [t|Xusampler1D|])
+
+newtype Xusampler2D = Xusampler2D { unXusampler2D :: String }
+$(genKnownTypeSymbol [t|Xusampler2D|] [e|"usampler2D"|])
+$(genSocketed        [t|Xusampler2D|] [e|unXusampler2D|] [e|Xusampler2D|])
+$(genToParams        [t|Xusampler2D|])
+
+newtype Xusampler3D = Xusampler3D { unXusampler3D :: String }
+$(genKnownTypeSymbol [t|Xusampler3D|] [e|"usampler3D"|])
+$(genSocketed        [t|Xusampler3D|] [e|unXusampler3D|] [e|Xusampler3D|])
+$(genToParams        [t|Xusampler3D|])
+
+newtype XusamplerCube = XusamplerCube { unXusamplerCube :: String }
+$(genKnownTypeSymbol [t|XusamplerCube|] [e|"usamplerCube"|])
+$(genSocketed        [t|XusamplerCube|] [e|unXusamplerCube|] [e|XusamplerCube|])
+$(genToParams        [t|XusamplerCube|])
+
+newtype Xusampler2DRect = Xusampler2DRect { unXusampler2DRect :: String }
+$(genKnownTypeSymbol [t|Xusampler2DRect|] [e|"usampler2DRect"|])
+$(genSocketed        [t|Xusampler2DRect|] [e|unXusampler2DRect|] [e|Xusampler2DRect|])
+$(genToParams        [t|Xusampler2DRect|])
+
+newtype Xusampler1DArray = Xusampler1DArray { unXusampler1DArray :: String }
+$(genKnownTypeSymbol [t|Xusampler1DArray|] [e|"usampler1DArray"|])
+$(genSocketed        [t|Xusampler1DArray|] [e|unXusampler1DArray|] [e|Xusampler1DArray|])
+$(genToParams        [t|Xusampler1DArray|])
+
+newtype Xusampler2DArray = Xusampler2DArray { unXusampler2DArray :: String }
+$(genKnownTypeSymbol [t|Xusampler2DArray|] [e|"usampler2DArray"|])
+$(genSocketed        [t|Xusampler2DArray|] [e|unXusampler2DArray|] [e|Xusampler2DArray|])
+$(genToParams        [t|Xusampler2DArray|])
+
+newtype XusamplerBuffer = XusamplerBuffer { unXusamplerBuffer :: String }
+$(genKnownTypeSymbol [t|XusamplerBuffer|] [e|"usamplerBuffer"|])
+$(genSocketed        [t|XusamplerBuffer|] [e|unXusamplerBuffer|] [e|XusamplerBuffer|])
+$(genToParams        [t|XusamplerBuffer|])
+
+newtype Xusampler2DMS = Xusampler2DMS { unXusampler2DMS :: String }
+$(genKnownTypeSymbol [t|Xusampler2DMS|] [e|"usampler2DMS"|])
+$(genSocketed        [t|Xusampler2DMS|] [e|unXusampler2DMS|] [e|Xusampler2DMS|])
+$(genToParams        [t|Xusampler2DMS|])
+
+newtype Xusampler2DMSArray = Xusampler2DMSArray { unXusampler2DMSArray :: String }
+$(genKnownTypeSymbol [t|Xusampler2DMSArray|] [e|"usampler2DMSArray"|])
+$(genSocketed        [t|Xusampler2DMSArray|] [e|unXusampler2DMSArray|] [e|Xusampler2DMSArray|])
+$(genToParams        [t|Xusampler2DMSArray|])
+
+--------------------------------------------------------------------------------
+-- Integer sampler types
+--------------------------------------------------------------------------------
+newtype Xisampler1D = Xisampler1D { unXisampler1D :: String }
+$(genKnownTypeSymbol [t|Xisampler1D|] [e|"isampler1D"|])
+$(genSocketed        [t|Xisampler1D|] [e|unXisampler1D|] [e|Xisampler1D|])
+$(genToParams        [t|Xisampler1D|])
+
+newtype Xisampler2D = Xisampler2D { unXisampler2D :: String }
+$(genKnownTypeSymbol [t|Xisampler2D|] [e|"isampler2D"|])
+$(genSocketed        [t|Xisampler2D|] [e|unXisampler2D|] [e|Xisampler2D|])
+$(genToParams        [t|Xisampler2D|])
+
+newtype Xisampler3D = Xisampler3D { unXisampler3D :: String }
+$(genKnownTypeSymbol [t|Xisampler3D|] [e|"isampler3D"|])
+$(genSocketed        [t|Xisampler3D|] [e|unXisampler3D|] [e|Xisampler3D|])
+$(genToParams        [t|Xisampler3D|])
+
+newtype XisamplerCube = XisamplerCube { unXisamplerCube :: String }
+$(genKnownTypeSymbol [t|XisamplerCube|] [e|"isamplerCube"|])
+$(genSocketed        [t|XisamplerCube|] [e|unXisamplerCube|] [e|XisamplerCube|])
+$(genToParams        [t|XisamplerCube|])
+
+newtype Xisampler2DRect = Xisampler2DRect { unXisampler2DRect :: String }
+$(genKnownTypeSymbol [t|Xisampler2DRect|] [e|"isampler2DRect"|])
+$(genSocketed        [t|Xisampler2DRect|] [e|unXisampler2DRect|] [e|Xisampler2DRect|])
+$(genToParams        [t|Xisampler2DRect|])
+
+newtype Xisampler1DArray = Xisampler1DArray { unXisampler1DArray :: String }
+$(genKnownTypeSymbol [t|Xisampler1DArray|] [e|"isampler1DArray"|])
+$(genSocketed        [t|Xisampler1DArray|] [e|unXisampler1DArray|] [e|Xisampler1DArray|])
+$(genToParams        [t|Xisampler1DArray|])
+
+newtype Xisampler2DArray = Xisampler2DArray { unXisampler2DArray :: String }
+$(genKnownTypeSymbol [t|Xisampler2DArray|] [e|"isampler2DArray"|])
+$(genSocketed        [t|Xisampler2DArray|] [e|unXisampler2DArray|] [e|Xisampler2DArray|])
+$(genToParams        [t|Xisampler2DArray|])
+
+newtype XisamplerBuffer = XisamplerBuffer { unXisamplerBuffer :: String }
+$(genKnownTypeSymbol [t|XisamplerBuffer|] [e|"isamplerBuffer"|])
+$(genSocketed        [t|XisamplerBuffer|] [e|unXisamplerBuffer|] [e|XisamplerBuffer|])
+$(genToParams        [t|XisamplerBuffer|])
+
+newtype Xisampler2DMS = Xisampler2DMS { unXisampler2DMS :: String }
+$(genKnownTypeSymbol [t|Xisampler2DMS|] [e|"isampler2DMS"|])
+$(genSocketed        [t|Xisampler2DMS|] [e|unXisampler2DMS|] [e|Xisampler2DMS|])
+$(genToParams        [t|Xisampler2DMS|])
+
+newtype Xisampler2DMSArray = Xisampler2DMSArray { unXisampler2DMSArray :: String }
+$(genKnownTypeSymbol [t|Xisampler2DMSArray|] [e|"isampler2DMSArray"|])
+$(genSocketed        [t|Xisampler2DMSArray|] [e|unXisampler2DMSArray|] [e|Xisampler2DMSArray|])
+$(genToParams        [t|Xisampler2DMSArray|])

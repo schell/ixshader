@@ -67,19 +67,30 @@ instance Socketed t => Socketed (Const t) where
   unSocket = unSocket . unConst
   socket = Const . socket
 
+newtype InOut typ = InOut { unInOut :: typ }
+
+instance KnownTypeSymbol t => KnownTypeSymbol (InOut t) where
+  typeSymbolVal _ = typeSymbolVal $ Proxy @t
+
+instance Socketed t => Socketed (InOut t) where
+  unSocket = unSocket . unInOut
+  socket = InOut . socket
+
 -- Read and write rules
 type family ReadFrom a where
   ReadFrom (Uniform t n) = t
   ReadFrom (In t n)      = t
   ReadFrom (Out t n)     = Error '(Out t n, "Cannot be read.")
+  ReadFrom (InOut t)     = t
   ReadFrom (Const t)     = t
   ReadFrom t             = t
 
 type family WriteTo a where
   WriteTo (Uniform t n) = Error '(Uniform t n, "Cannot be written.")
-  WriteTo (In t n)      = Error '(In t n, "Cannot be written.")
+  WriteTo (In t n)      = Error '(In t n,      "Cannot be written.")
   WriteTo (Out t n)     = t
-  WriteTo (Const t)     = Error '(Const t, "Cannot be written.")
+  WriteTo (InOut t)     = t
+  WriteTo (Const t)     = Error '(Const t,     "Cannot be written.")
   WriteTo t             = t
 
 class Cast a b where
@@ -235,11 +246,6 @@ instance (Binding a t, Binding as [t]) => Binding (a ': as) [t] where
   getVertexBinding  = getVertexBinding  @a : getVertexBinding  @as
   getUniformBinding = getUniformBinding @a : getUniformBinding @as
 
--- | Some glsl evaluation contexts. This is used to choose alternate syntax in
--- cases where shader code differs between contexts, for example the @in@ keyword
--- is not available on glsl bound for a webgl context, and should be replaced
--- with @attribute@.
-data GLContext = OpenGLContext | WebGLContext
 
 -- | An easy way to get the term level value of a type of kind 'GLContext'.
 class HasContext (a :: GLContext) where
@@ -249,30 +255,39 @@ instance HasContext 'OpenGLContext where
 instance HasContext 'WebGLContext where
   getCtx = WebGLContext
 
+-- | An easy way to get the term level value of a type of kind 'ShaderType'.
+class HasShaderType (a :: ShaderType) where
+  getShaderType :: ShaderType
+instance HasShaderType 'VertexShader where
+  getShaderType = VertexShader
+instance HasShaderType 'FragmentShader where
+  getShaderType = FragmentShader
+
 uniform_
-  :: forall t name ts ctx. (KnownSymbol name, Socketed t, KnownTypeSymbol t)
-  => IxShader ctx ts (ts :++ '[Uniform t name]) (Uniform t name)
+  :: forall t name ts ctx shadertype. (KnownSymbol name, Socketed t, KnownTypeSymbol t)
+  => IxShader shadertype ctx ts (ts :++ '[Uniform t name]) (Uniform t name)
 uniform_ = acc decls u u
   where
     u = socket $ symbolVal $ Proxy @name
     decls = unwords ["uniform", toDefinition u, ";"]
 
 in_
-  :: forall t name ts ctx.
-     (HasContext ctx, KnownSymbol name, Socketed t, KnownTypeSymbol t)
-  => IxShader ctx ts (ts :++ '[In t name]) (In t name)
+  :: forall t name ts ctx shadertype.
+     (HasContext ctx, HasShaderType shadertype, KnownSymbol name, Socketed t, KnownTypeSymbol t)
+  => IxShader shadertype ctx ts (ts :++ '[In t name]) (In t name)
 in_ = acc decls i i
   where
     i   = socket $ symbolVal $ Proxy @name
-    dec = case getCtx @ctx of
-      OpenGLContext -> "in"
-      WebGLContext  -> "attribute"
+    dec = case (getCtx @ctx, getShaderType @shadertype) of
+      (OpenGLContext, _)             -> "in"
+      (WebGLContext, VertexShader)   -> "attribute"
+      (WebGLContext, FragmentShader) -> "varying"
     decls = unwords [dec, toDefinition i, ";"]
 
 out_
-  :: forall t name ts ctx.
+  :: forall t name ts ctx shadertype.
      (HasContext ctx, KnownSymbol name, Socketed t, KnownTypeSymbol t)
-  => IxShader ctx ts (ts :++ '[Out t name]) (Out t name)
+  => IxShader shadertype ctx ts (ts :++ '[Out t name]) (Out t name)
 out_ = acc decls o o
   where
     o   = socket $ symbolVal $ Proxy @name
@@ -283,7 +298,7 @@ out_ = acc decls o o
 
 gl_Position
   :: forall ts ctx.
-  IxShader ctx ts (ts :++ '[Out Xvec4 "gl_Position"]) (Out Xvec4 "gl_Position")
+  IxVertex ctx ts (ts :++ '[Out Xvec4 "gl_Position"]) (Out Xvec4 "gl_Position")
 gl_Position = acc [] o o
   where o = socket "gl_Position"
 
@@ -293,7 +308,7 @@ type family GLFragName (a :: GLContext) where
 
 gl_FragColor
   :: forall ctx ts. (HasContext ctx, KnownSymbol (GLFragName ctx))
-  => IxShader ctx ts (ts :++ '[Out Xvec4 (GLFragName ctx)]) (Out Xvec4 (GLFragName ctx))
+  => IxFragment ctx ts (ts :++ '[Out Xvec4 (GLFragName ctx)]) (Out Xvec4 (GLFragName ctx))
 gl_FragColor = acc decls o o
   where o = socket $ symbolVal $ Proxy @(GLFragName ctx)
         decls = case getCtx @ctx of

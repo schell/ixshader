@@ -40,6 +40,7 @@ import           Graphics.IxShader.Qualifiers as G
 import           Graphics.IxShader.Socket     as G
 import           Graphics.IxShader.Swizzle    as G
 import           Graphics.IxShader.Types      as G
+import           Graphics.IxShader.Texture    as G
 import           Prelude                     hiding (Eq (..), Floating (..),
                                               Fractional (..), Num (..),
                                               Ord (..), fail, fromInteger,
@@ -57,12 +58,12 @@ fromRational =
 
 infixr 1 .=
 (.=)
-  :: forall a b i ctx.
+  :: forall a b i ctx shadertype.
      ( Socketed a, Socketed b
      , WriteTo a ~ ReadFrom b
      )
   => a -> b
-  -> IxShader ctx i i ()
+  -> IxShader shadertype ctx i i ()
 (.=) a b = nxt_ $ unwords [unSocket a, "=", unSocket b ++ ";"]
 
 
@@ -183,8 +184,8 @@ infixr 5 .:
 type IsGLContext ctx = (HasContext ctx, KnownSymbol (GLFragName ctx))
 
 main_
-  :: forall (ctx :: GLContext) i a.
-  IxShader ctx i i a -> IxShader ctx i (i :++ '[Main]) ()
+  :: forall (ctx :: GLContext)  shadertype i a.
+  IxShader shadertype ctx i i a -> IxShader shadertype ctx i (i :++ '[Main]) ()
 main_ f = void $ func @"main" () $ const $ do
   void f
   return nil
@@ -207,8 +208,8 @@ for
   :: (Socketed a, KnownTypeSymbol a)
   => (String, a)
   -> (a -> (Xbool, a))
-  -> (a -> IxShader ctx i i b)
-  -> IxShader ctx i i b
+  -> (a -> IxShader shadertype ctx i i b)
+  -> IxShader shadertype ctx i i b
 for (name, v) fi f = do
   let k = socket name
       (itill, iinc) = fi k
@@ -223,7 +224,7 @@ for (name, v) fi f = do
 
 bigfattestvertex
   :: forall (ctx :: GLContext). HasContext ctx
-  => IxShader ctx '[] '[ Uniform Xvec2 "u_resolution"
+  => IxVertex ctx '[] '[ Uniform Xvec2 "u_resolution"
                        , Out Xvec4 "gl_Position"
                        , Function Xint "myFunc" (Xint, Xint)
                        , Main
