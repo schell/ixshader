@@ -23,6 +23,7 @@ module Graphics.IxShader.Qualifiers where
 
 
 import           Data.Promotion.Prelude         hiding (Const)
+import           Data.Proxy
 import           Data.Singletons.TypeLits
 import           Prelude                        hiding (Read, return, (>>),
                                                  (>>=), log)

@@ -22,7 +22,7 @@ module Graphics.IxShader.Socket where
 
 
 import           Data.List                 (intercalate)
-import           Data.Promotion.Prelude
+import           Data.Proxy
 
 import           Graphics.IxShader.IxShader
 import           Language.Haskell.TH
