@@ -41,6 +41,7 @@ import           Graphics.IxShader.Socket     as G
 import           Graphics.IxShader.Swizzle    as G
 import           Graphics.IxShader.Types      as G
 import           Graphics.IxShader.Texture    as G
+import           Graphics.IxShader.Struct     as G
 import           Prelude                     hiding (Eq (..), Floating (..),
                                               Fractional (..), Num (..),
                                               Ord (..), fail, fromInteger,

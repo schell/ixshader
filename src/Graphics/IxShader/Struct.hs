@@ -12,13 +12,12 @@
 
 module Graphics.IxShader.Struct where
 
-import Data.Proxy
-import Graphics.IxShader.Types
-import Graphics.IxShader.IxShader
-import Data.Promotion.Prelude.List
-import Data.Promotion.Prelude.Maybe
-
-import GHC.TypeLits
+import           Data.Promotion.Prelude.List
+import           Data.Promotion.Prelude.Maybe
+import           Data.Proxy
+import           GHC.TypeLits
+import           Graphics.IxShader.IxShader
+import           Graphics.IxShader.Types
 
 newtype Struct (name :: Symbol) (fields :: [(Symbol, *)]) = Struct
     { unStruct :: String
@@ -49,19 +48,10 @@ instance forall name typ xs. ( KnownSymbol name
             "\t" ++
             typeSymbolVal (Proxy @typ) ++ " " ++ symbolVal (Proxy @name) ++ ";"
 
--- Test struct, delete this later
-{-
- -type Material = 
- -    Struct "Material" 
- -        '[ '("ambient", Xvec3)
- -         , '("diffuse", Xvec3)
- -         , '("specular", Xvec3)
- -         , '("shininess", Xfloat) ]
- -}
-
 type family FieldAt (f :: Symbol) (fs :: [(Symbol, *)]) where
     FieldAt f fs = 
-        FromMaybe (TypeError ('Text "Struct field not found during lookup")) (Lookup f fs)
+        FromMaybe (TypeError ('Text "Struct field not found during lookup")) 
+                  (Lookup f fs)
 
 -- | Field accessor for structs
 field :: forall a n fs field.
@@ -80,7 +70,8 @@ struct_ ::
        )
     => IxShader shadertype ctx ts (ts :++ '[Struct name fields]) ()
 struct_ = acc decls (Struct "" :: Struct name fields) ()
-    where decls = unlines $
-            [ "struct " ++ typeSymbolVal (Proxy @(Struct name fields)) ++ "{" ] ++
-            fieldDeclarations (Proxy @fields) ++
-            [ "};" ]
+  where
+    decls =
+        unlines $
+        ["struct " ++ typeSymbolVal (Proxy @(Struct name fields)) ++ "{"] ++
+        fieldDeclarations (Proxy @fields) ++ ["};"]
