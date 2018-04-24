@@ -216,6 +216,9 @@ normalize = call "normalize"
 dot :: Readable a b => a -> b -> Xfloat
 dot = call2 "dot"
 
+reflect :: Readable a b => a -> b -> ReadFrom a
+reflect = call2 "reflect"
+
 inverse :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
 inverse = call "inverse"
 
