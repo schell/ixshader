@@ -18,6 +18,7 @@ import           Data.Promotion.Prelude.Maybe
 import           Data.Proxy
 import           GHC.TypeLits
 import           Graphics.IxShader.IxShader
+import           Graphics.IxShader.Qualifiers
 import           Graphics.IxShader.Types
 
 newtype Struct (name :: Symbol) (fields :: [(Symbol, *)]) = Struct
@@ -55,12 +56,20 @@ type family FieldAt (f :: Symbol) (fs :: [(Symbol, *)]) where
                   (Lookup f fs)
 
 -- | Field accessor for structs
-field :: forall a n fs field.
-      (Socketed a, KnownSymbol n, KnownSymbol field, a ~ FieldAt field fs)
-   => Struct n fs
-   -> Proxy field
-   -> a
-field (Struct var) _ = socket $ var ++ "." ++ symbolVal (Proxy @field)
+field ::
+       forall a b n fs field.
+       ( Socketed a
+       , Socketed b
+       , KnownSymbol n
+       , KnownSymbol field
+       , b ~ FieldAt field fs
+       , ReadFrom a ~ Struct n fs
+       )
+    => a
+    -> Proxy field
+    -> b
+field struct _ =
+    socket $ unStruct (cast struct) ++ "." ++ symbolVal (Proxy @field)
 
 -- | Introduce a new struct
 struct_ ::
