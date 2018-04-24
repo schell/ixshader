@@ -216,6 +216,12 @@ normalize = call "normalize"
 dot :: Readable a b => a -> b -> Xfloat
 dot = call2 "dot"
 
+inverse :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
+inverse = call "inverse"
+
+transpose :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
+transpose = call "transpose"
+
 --------------------------------------------------------------------------------
 -- Program-level in/out bindings
 --------------------------------------------------------------------------------
