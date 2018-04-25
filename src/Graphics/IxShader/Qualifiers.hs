@@ -225,6 +225,9 @@ inverse = call "inverse"
 transpose :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
 transpose = call "transpose"
 
+inversesqrt :: Socketed a => a -> a
+inversesqrt = call "inversesqrt"
+
 --------------------------------------------------------------------------------
 -- Program-level in/out bindings
 --------------------------------------------------------------------------------
