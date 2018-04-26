@@ -19,6 +19,7 @@ import           Data.Proxy
 import           GHC.TypeLits
 import           Graphics.IxShader.IxShader
 import           Graphics.IxShader.Qualifiers
+import           Graphics.IxShader.Function.ToParams
 import           Graphics.IxShader.Types
 
 newtype Struct (name :: Symbol) (fields :: [(Symbol, *)]) = Struct
@@ -32,6 +33,9 @@ instance forall name fields. KnownSymbol name =>
 instance Socketed (Struct name fields) where
     unSocket = unStruct
     socket = Struct
+
+instance KnownSymbol name => ToParams (Struct name fields) where
+    toParams = pure . toDefinition
 
 class FieldDeclarations (a :: [(Symbol, *)]) where
     fieldDeclarations :: proxy a -> [String]

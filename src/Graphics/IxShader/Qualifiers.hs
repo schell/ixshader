@@ -228,6 +228,9 @@ transpose = call "transpose"
 inversesqrt :: Socketed a => a -> a
 inversesqrt = call "inversesqrt"
 
+clamp :: Socketed a => a -> a -> a -> a
+clamp = call3 "clamp"
+
 --------------------------------------------------------------------------------
 -- Program-level in/out bindings
 --------------------------------------------------------------------------------
