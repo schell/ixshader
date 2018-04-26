@@ -33,15 +33,16 @@ import           Data.Promotion.Prelude.Num
 import           Data.Proxy
 import           Data.Ratio                  (denominator, numerator)
 import           Data.Singletons.TypeLits
+import           Graphics.IxShader.Array      as G
 import           Graphics.IxShader.Function   as G
 import           Graphics.IxShader.IxShader   as G
 import           Graphics.IxShader.Ops.Mult   as G
 import           Graphics.IxShader.Qualifiers as G
 import           Graphics.IxShader.Socket     as G
-import           Graphics.IxShader.Swizzle    as G
-import           Graphics.IxShader.Types      as G
-import           Graphics.IxShader.Texture    as G
 import           Graphics.IxShader.Struct     as G
+import           Graphics.IxShader.Swizzle    as G
+import           Graphics.IxShader.Texture    as G
+import           Graphics.IxShader.Types      as G
 import           Prelude                     hiding (Eq (..), Floating (..),
                                               Fractional (..), Num (..),
                                               Ord (..), fail, fromInteger,
