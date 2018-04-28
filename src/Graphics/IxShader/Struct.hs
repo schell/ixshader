@@ -9,6 +9,7 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 {-# OPTIONS_GHC -fprint-explicit-kinds #-}
 
 module Graphics.IxShader.Struct where
@@ -17,6 +18,7 @@ import           Data.Promotion.Prelude.List
 import           Data.Promotion.Prelude.Maybe
 import           Data.Proxy
 import           GHC.TypeLits
+import           GHC.OverloadedLabels
 import           Graphics.IxShader.IxShader
 import           Graphics.IxShader.Qualifiers
 import           Graphics.IxShader.Function.ToParams
@@ -59,6 +61,11 @@ type family FieldAt (f :: Symbol) (fs :: [(Symbol, *)]) where
         FromMaybe (TypeError ('Text "Struct field not found during lookup")) 
                   (Lookup f fs)
 
+data FProxy (f :: Symbol) = FProxy
+
+instance f ~ f' => IsLabel f (FProxy f') where
+    fromLabel = FProxy @f'
+
 -- | Field accessor for structs
 field ::
        forall a b n fs field.
@@ -70,7 +77,7 @@ field ::
        , ReadFrom a ~ Struct n fs
        )
     => a
-    -> Proxy field
+    -> FProxy field
     -> b
 field struct _ =
     socket $ unStruct (cast struct) ++ "." ++ symbolVal (Proxy @field)
