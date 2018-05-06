@@ -231,6 +231,9 @@ inversesqrt = call "inversesqrt"
 clamp :: Socketed a => a -> a -> a -> a
 clamp = call3 "clamp"
 
+mix :: Socketed a => a -> a -> Xfloat -> a
+mix = call3 "mix"
+
 --------------------------------------------------------------------------------
 -- Program-level in/out bindings
 --------------------------------------------------------------------------------
