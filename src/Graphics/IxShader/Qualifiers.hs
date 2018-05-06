@@ -219,6 +219,9 @@ dot = call2 "dot"
 reflect :: Readable a b => a -> b -> ReadFrom a
 reflect = call2 "reflect"
 
+refract :: Socketed a => a -> a -> Xfloat -> a
+refract = call3 "refract"
+
 inverse :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
 inverse = call "inverse"
 
