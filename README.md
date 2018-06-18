@@ -1,4 +1,8 @@
 # ixshader
+If you're interested in this project please see its spiritual successor
+[gristle](https://github.com/schell/gristle), which simplifies the types 
+involved by removing indexed monads.
+
 `ixshader` is a shallow embedding of the OpenGL Shading Language in Haskell. It
 aims to look as close to actual glsl shader code as possible, while providing
 better compile-time safety. Currently writing shader code in `ixshader`'s
