@@ -26,11 +26,13 @@ library
   ghc-options:         -Wall
   hs-source-dirs:      src
   exposed-modules:     Graphics.IxShader
+                       Graphics.IxShader.Array
                        Graphics.IxShader.Function
                        Graphics.IxShader.IxShader
                        Graphics.IxShader.Ops.Mult
                        Graphics.IxShader.Qualifiers
                        Graphics.IxShader.Socket
+                       Graphics.IxShader.Struct
                        Graphics.IxShader.Swizzle
                        Graphics.IxShader.Texture
                        Graphics.IxShader.Types

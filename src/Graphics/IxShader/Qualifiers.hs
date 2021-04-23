@@ -23,6 +23,7 @@ module Graphics.IxShader.Qualifiers where
 
 
 import           Data.Promotion.Prelude         hiding (Const)
+import           Data.Proxy
 import           Data.Singletons.TypeLits
 import           Prelude                        hiding (Read, return, (>>),
                                                  (>>=), log)
@@ -214,6 +215,27 @@ normalize = call "normalize"
 
 dot :: Readable a b => a -> b -> Xfloat
 dot = call2 "dot"
+
+reflect :: Readable a b => a -> b -> ReadFrom a
+reflect = call2 "reflect"
+
+refract :: Socketed a => a -> a -> Xfloat -> a
+refract = call3 "refract"
+
+inverse :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
+inverse = call "inverse"
+
+transpose :: (Socketed a, Socketed (ReadFrom a)) => a -> ReadFrom a
+transpose = call "transpose"
+
+inversesqrt :: Socketed a => a -> a
+inversesqrt = call "inversesqrt"
+
+clamp :: Socketed a => a -> a -> a -> a
+clamp = call3 "clamp"
+
+mix :: Socketed a => a -> a -> Xfloat -> a
+mix = call3 "mix"
 
 --------------------------------------------------------------------------------
 -- Program-level in/out bindings

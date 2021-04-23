@@ -28,6 +28,7 @@ module Graphics.IxShader.Swizzle
   , xz
   , yz
   , xyz
+  , xyww
   ) where
 
 import           Data.Proxy                  (Proxy (..))
@@ -110,3 +111,9 @@ xyz :: forall a.
   => a
   -> Swizzled 3 (ReadFrom a)
 xyz = swizzle @3 "xyz"
+
+xyww :: forall a.
+     SwizzleRead a 4
+  => a
+  -> Swizzled 4 (ReadFrom a)
+xyww = swizzle @4 "xyww"

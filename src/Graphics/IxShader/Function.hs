@@ -25,6 +25,7 @@ module Graphics.IxShader.Function
 import           Data.List                          (intercalate)
 import           Data.Promotion.Prelude
 import           Data.Singletons.TypeLits
+import           Data.Proxy
 import           Prelude                            hiding (Read, return, (>>),
                                                      (>>=))
 

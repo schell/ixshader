@@ -45,5 +45,14 @@ instance (ToParams a, ToParams b, ToParams c) => ToParams (a, b, c) where
 instance (ToParams a, ToParams b, ToParams c, ToParams d) => ToParams (a, b, c, d) where
   toParams (a, b, c, d) = toParams a ++ toParams b ++ toParams c ++ toParams d
 
+instance (ToParams a, ToParams b, ToParams c, ToParams d, ToParams e) => ToParams (a, b, c, d, e) where
+  toParams (a, b, c, d, e) = toParams a ++ toParams b ++ toParams c ++ toParams d ++ toParams e
+
+instance (ToParams a, ToParams b, ToParams c, ToParams d, ToParams e, ToParams f) => ToParams (a, b, c, d, e, f) where
+  toParams (a, b, c, d, e, f) = toParams a ++ toParams b ++ toParams c ++ toParams d ++ toParams e ++ toParams f
+
+instance (ToParams a, ToParams b, ToParams c, ToParams d, ToParams e, ToParams f, ToParams g) => ToParams (a, b, c, d, e, f, g) where
+  toParams (a, b, c, d, e, f, g) = toParams a ++ toParams b ++ toParams c ++ toParams d ++ toParams e ++ toParams f ++ toParams g
+
 toNames :: ToParams ps => ps -> [String]
 toNames = map (drop 1 . dropWhile (/= ' ')) . toParams
